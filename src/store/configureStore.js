@@ -1,5 +1,5 @@
 import { createStore, applyMiddleware, compose } from 'redux';
-import sagaMiddleware from 'redux-saga';
+import createSagaMiddleware from 'redux-saga';
 import thunk from 'redux-thunk';
 import logger from './logger';
 import DevTools from '../containers/DevTools';
@@ -9,11 +9,12 @@ import huntingSagas from '../sagas/HuntingSagas';
 
 export default function configureStore(initialState) {
   let createStoreWithMiddleware;
+  const sagaMiddleware = createSagaMiddleware();
 
   if (__DEV__) {
     createStoreWithMiddleware = compose(
       applyMiddleware(
-      	sagaMiddleware(huntingSagas),
+      	sagaMiddleware,
         thunk,
         logger
       ),
@@ -22,13 +23,14 @@ export default function configureStore(initialState) {
   } else {
     createStoreWithMiddleware = compose(
       applyMiddleware(
-      	sagaMiddleware(huntingSagas),
+      	sagaMiddleware,
         thunk
       )
     )(createStore);
   }
 
   const store = createStoreWithMiddleware(rootReducer, initialState);
+  sagaMiddleware.run(huntingSagas);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers
