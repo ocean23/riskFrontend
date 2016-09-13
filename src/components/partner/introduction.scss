@@ -1,0 +1,111 @@
+
+.jumbotron-homepage{
+    height:610px;
+    background-image: url(/assets/image/homepage_bg.jpg);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-size: cover;
+  }
+
+  
+.navbar{
+  width: 100%;
+  border-radius: 0;
+  border:0 !important;
+}
+
+.navbar-brand {
+    padding: 10px 10px;
+
+}
+
+.navbar-right {
+    float: right!important;
+    margin-right: 15px;
+}
+
+.navbar-nav {
+    margin: 0;
+}
+
+.navbar-header {
+    float: left;
+}
+
+.navbar.affix-top {
+    background: none;
+}
+
+.navbar.affix {
+    background-image: url(/assets/image/navi_bg.png);
+    box-shadow: 0 2px 2px 1px rgba(0,0,0,0.15);
+}
+
+.naviLink{
+    padding: 0!important;
+}
+
+.row.text-box{
+  width:60%;
+  display: block;
+  margin-right: auto;
+  margin-left: auto;
+  margin-top: 50px;
+}
+
+@media only screen and (min-width: 1500px) {
+
+.navbar-brand {
+    height: 70px;
+    padding: 15px 15px;
+
+}
+
+}
+
+@media only screen and (max-width: 992px) {
+
+.jumbotron-homepage{
+    height:550px;
+  }
+  .row.text-box{
+  width:70%;
+}
+
+}
+@media only screen and (max-width: 768px) {
+  
+.jumbotron-homepage{
+    height:450px;
+  }
+  .row.text-box{
+  width:85%;
+  margin-top: 10px;
+}
+.navbar-brand {
+    padding: 15px 15px;
+
+}
+
+}
+
+@media only screen and (width: 768px) {
+  .col-sm-9 {
+    width: 100%;
+}
+
+}
+
+@media only screen and (max-width: 435px) {
+  
+.jumbotron-homepage{
+    height:300px;
+  }
+
+  .row.text-box{
+  width:95%;
+  margin-top: 20px;
+}
+
+}
+

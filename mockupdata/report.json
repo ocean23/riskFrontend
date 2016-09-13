@@ -1,0 +1,45 @@
+{
+  "code" : 0,
+  "msg" : "",
+  "data" : {
+    "orderType" : "",
+    "clothType" : "",
+    "groupCode" : "",
+    "categoryType" : "",
+    "month" : "",
+    "orderTypeChartData" : [ {
+      "name" : "改衣",
+      "y" : 100,
+      "amount" : 100
+    } ],
+    "clothTypeChartData" : [],
+    "groupCodeChartData" : [ {
+      "name" : "改衣",
+      "y" : 30,
+      "amount" : 30
+    }, {
+      "name" : "订单",
+      "y" : 70,
+      "amount" : 70
+    } ],
+    "categoryTypeChartData" : [ {
+      "name" : "改衣",
+      "y" : 30,
+      "amount" : 30
+    }, {
+      "name" : "订单",
+      "y" : 70,
+      "amount" : 70
+    } ],
+    "monthChartData" : [ {
+      "name" : "香港",
+      "y" : 100,
+      "color": "#808080"
+    }, {
+      "name" : "订单",
+      "y" : 0,
+      "amount" : 0
+    }]
+  },
+  "debugInfo" : null
+}

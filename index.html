@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="ch">
+<head>
+<meta charset="utf-8" />
+<meta http-equiv="content-type" content="text/html; charset=utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no" />
+<link rel="shortcut icon" href="/assets/iceworld/img/navLogo.png" type="image/x-icon">
+<!-- yield "head" --><!-- /yield -->
+<link rel="stylesheet" href="/assets/common/css/bootstrap-3.3.6.min.css" />
+<link rel="stylesheet" href="/assets/common/css/loading.css" />
+<script src="/assets/common/js/jquery-2.2.4.min.js"></script>
+<script src="/assets/common/js/bootstrap-3.3.6.min.js"></script>
+<script src="/assets/common/js/util.js"></script>
+<script src="/assets/common/js/jweixin-1.0.0.js"></script>
+<script src="/assets/common/js/share.js"></script>
+<title>寻找冰封的宝藏</title>
+</head>
+	<body style="height: 100%;width: 100%">
+<script type="text/javascript">
+	const fullHost = location.protocol + '//' + location.hostname + (location.port ? ':' + location.port: '');
+	const serverString = location.protocol + '//' + location.hostname + ':8888/web'
+	var G = G || {
+		baseHost: fullHost,
+		assetsHost: fullHost,
+		serverHost: serverString
+	};
+	G.id = function(id) {
+		return document.getElementById(id);
+	};
+	G.showLoading = function() {
+		G.id('g-loading').style.display = 'block';
+	};
+	G.hideLoading = function() {
+		G.id('g-loading').style.display = 'none';
+	};
+	var url_obj = parser(window.location.href);
+	var code = url_obj.search.code;
+	if (code === null || code === undefined) {
+		window.location.href = 'redirecthome.html';
+	} else {
+		G.code = code;
+	}
+</script>
+		<div id="g-loading" class="circleG_wrapper">
+			<div class="circleG circleG_1"></div>
+			<div class="circleG circleG_2"></div>
+			<div class="circleG circleG_3"></div>
+		</div>
+		<div id="root">
+		</div>
+	<script type="text/javascript" src="/dist/build.js"></script>
+</body>
+</html>

@@ -1,0 +1,61 @@
+.jumbotron_thumb{
+    background-color: transparent;
+}
+/*.slider-nav
+{
+  width:80%;
+}*/
+
+.slick-prev {
+        background-image: url('/assets/image/ArrowLeft.png');
+        opacity: 0.3;
+
+        /* place button left */
+        left: 0;
+}
+.slick-next {
+        background-image: url('/assets/image/ArrowRight.png');
+        opacity: 0.3;
+
+        /* place button right */
+        right: 0;
+}
+.slick-prev, .slick-next {
+   
+    width: 200px;
+    background-size: contain;
+    background-repeat: no-repeat;
+
+    /* to position the arrows left and right at the bottom of slider */
+    position: absolute;
+    z-index: 10;
+    bottom: 0;
+}
+
+.slick-prev:before
+{
+    content: '';
+}
+[dir='rtl'] .slick-prev:before
+{
+    content: '';
+}
+
+.slick-next:before
+{
+    content: '';
+}
+[dir='rtl'] .slick-next:before
+{
+    content: '';
+}
+
+.slider-nav{
+    .slick-current img{
+        padding:2px;
+        border:2px solid lightgrey;
+        border-style: outset;
+
+    }
+}
+
