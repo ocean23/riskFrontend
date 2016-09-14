@@ -40,7 +40,7 @@ module.exports = {
 		}],
 		loaders: [{
 			test: /\.js$/,
-			loader: 'react-hot!babel!eslint-loader',
+			loader: 'babel!eslint-loader',
 			exclude: /node_modules/
 		}, {
 				test: /\.scss$/,

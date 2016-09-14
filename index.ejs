@@ -7,12 +7,9 @@
 <link rel="shortcut icon" href="/assets/iceworld/img/navLogo.png" type="image/x-icon">
 <!-- yield "head" --><!-- /yield -->
 <link rel="stylesheet" href="/assets/common/css/bootstrap-3.3.7.min.css" />
-<link rel="stylesheet" href="/assets/common/css/loading.css" />
 <script src="/assets/common/js/jquery-2.2.4.min.js"></script>
 <script src="/assets/common/js/bootstrap-3.3.7.min.js"></script>
 <script src="/assets/common/js/util.js"></script>
-<script src="/assets/common/js/jweixin-1.0.0.js"></script>
-<script src="/assets/common/js/share.js"></script>
 <title>寻找冰封的宝藏</title>
 </head>
 	<body>
@@ -27,12 +24,6 @@
 		G.id = function(id) {
 			return document.getElementById(id);
 		};
-		G.showLoading = function() {
-			G.id('g-loading').style.display = 'block';
-		};
-		G.hideLoading = function() {
-			G.id('g-loading').style.display = 'none';
-		};
 		var url_obj = parser(window.location.href);
 		var code = url_obj.search.code;
 		if (code === null || code === undefined) {
@@ -41,11 +32,6 @@
 			G.code = code;
 		}
 	</script>
-		<div id="g-loading" class="circleG_wrapper">
-			<div class="circleG circleG_1"></div>
-			<div class="circleG circleG_2"></div>
-			<div class="circleG circleG_3"></div>
-		</div>
 		<div id="root">
 		</div>
 	</body>
