@@ -4,7 +4,7 @@ import thunk from 'redux-thunk';
 import logger from './logger';
 import DevTools from '../containers/DevTools';
 import rootReducer from '../reducers';
-import huntingSagas from '../sagas/HuntingSagas';
+import userSagas from '../sagas/UserSagas';
 
 
 export default function configureStore(initialState) {
@@ -30,7 +30,7 @@ export default function configureStore(initialState) {
   }
 
   const store = createStoreWithMiddleware(rootReducer, initialState);
-  sagaMiddleware.run(huntingSagas);
+  sagaMiddleware.run(userSagas);
 
   if (module.hot) {
     // Enable Webpack hot module replacement for reducers

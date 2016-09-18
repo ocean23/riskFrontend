@@ -11,19 +11,16 @@ import { fromJS } from 'immutable';
 import DevTools from '../containers/DevTools';
 import configureStore from '../store/configureStore';
 import App from '../containers/navigation/App';
-import Home from '../containers/navigation/Home';
-import DuckPage from '../containers/navigation/DuckPage';
+import LoginPage from '../containers/navigation/LoginPage';
+import LoginOtpPage from '../containers/navigation/LoginOtpPage';
 
 const initialState = fromJS({
   user: {
-    openid: '',
-    duck: false,
-    threed: false,
-    milk: false,
-    iceking: false,
-    coast: false,
-    count: 0,
-    prized: false
+  	validAuthenticatioin: false,
+    userId: '',
+    username: '',
+    password: '',
+    xUserToken: ''
   }
 });
 const store = configureStore(initialState);
@@ -42,8 +39,9 @@ ReactDOM.render(
 		<div>
 			<Router history={ browserHistory }>
 				<Route path="/" component={App}>
-					<IndexRoute component={Home}/>
-		      <Route path="/duck" component={DuckPage}/>
+					<IndexRoute component={LoginPage}/>
+		      <Route path="/login" component={LoginPage}/>
+		      <Route path="/loginotp" component={LoginOtpPage}/>
 	      </Route>
 			</Router>
 			{ injectDevTools() }
