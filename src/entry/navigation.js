@@ -13,6 +13,7 @@ import configureStore from '../store/configureStore';
 import App from '../containers/navigation/App';
 import LoginPage from '../containers/navigation/LoginPage';
 import LoginOtpPage from '../containers/navigation/LoginOtpPage';
+import MainPage from '../containers/navigation/MainPage';
 
 const initialState = fromJS({
   user: {
@@ -42,6 +43,7 @@ ReactDOM.render(
 					<IndexRoute component={LoginPage}/>
 		      <Route path="/login" component={LoginPage}/>
 		      <Route path="/loginotp" component={LoginOtpPage}/>
+		      <Route path="/main" component={MainPage}/>
 	      </Route>
 			</Router>
 			{ injectDevTools() }

@@ -4,9 +4,7 @@ import { Link, browserHistory } from 'react-router';
 import classNames from 'classnames';
 import { push } from 'react-router-redux';
 import { loginSagas, changePage } from '../../actions/userAction';
-import {
-    LOCATION_CHANGE
-} from 'react-router-redux';
+import { LOGIN_SAGAS } from '../../constants/UserConstants';
 
 class LoginPage extends Component {
 
@@ -54,13 +52,7 @@ class LoginPage extends Component {
 			username: this.refs.mobile.value,
 			password: this.refs.password.value
 		};
-		console.log('@@@@@@');
-		console.log(data);
-		console.log('@@@@@@@');
-		this.props.dispatch(loginSagas(data));
-		// this.props.dispatch(push('loginotp'));
-		// this.props.dispatch(changePage(data));
-		// browserHistory.push('/loginotp');
+		this.props.dispatch({type: LOGIN_SAGAS, containerParam: data});
 	}
 }
 

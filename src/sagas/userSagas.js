@@ -1,19 +1,14 @@
 import { put, call } from 'redux-saga/effects';
 import { takeEvery } from 'redux-saga';
-import { LOGIN_SAGAS, LOGIN_OTP_SAGAS } from '../constants/UserConstants';
-import { login, afterLogin, loginOtp, afterLoginOtp } from '../actions/userAction';
+import { LOGIN_SAGAS, LOGIN_OTP_SAGAS, AFTER_LOGIN, AFTER_LOGIN_OTP } from '../constants/UserConstants';
+import { login, loginOtp, afterLoginOtp } from '../actions/userAction';
 import { browserHistory } from 'react-router';
 
 export function* loginSagas(getState) {
 	try {
-		console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-		const chartsData = yield call(login, getState.intermedia);
-		console.log('--------');
-		console.log(chartsData);
-		console.log('-------');
+		const chartsData = yield call(login, getState.containerParam);
 		if (chartsData.status === 200) {
-			yield put(afterLogin(getState.intermedia));
-			browserHistory.push('/loginotp');
+			yield put({type: AFTER_LOGIN, sagasParam: getState.containerParam});
 		} else {
 			console.log('error: code=' + chartsData.code);
 		}
@@ -24,13 +19,13 @@ export function* loginSagas(getState) {
 
 export function* loginOtpSagas(getState) {
 	try {
-		console.log('&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&&');
-		const chartsData = yield call(loginOtp, getState.intermedia);
-		console.log('--------');
-		console.log(chartsData);
-		console.log('-------');
+		const chartsData = yield call(loginOtp, getState.containerParam);
+		console.log('############');
+		console.log(chartsData.status);
+		console.log(chartsData.headers.get('X-USER-TOKEN'));
+		console.log('############');
 		if (chartsData.status === 200) {
-			yield put(afterLoginOtp(getState.intermedia));
+			yield put({type: AFTER_LOGIN_OTP, xUserToken: chartsData.headers.get('X-USER-TOKEN')});
 		} else {
 			console.log('error: code=' + chartsData.code);
 		}

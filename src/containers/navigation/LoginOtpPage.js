@@ -2,7 +2,7 @@ import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
 import { Link } from 'react-router';
 import classNames from 'classnames';
-import { loginOtpSagas } from '../../actions/userAction';
+import { LOGIN_OTP_SAGAS } from '../../constants/UserConstants';
 
 function mapStateToProps(state) {
   return {
@@ -55,14 +55,16 @@ class LoginOtpPage extends Component {
 			password: this.props.password,
 			otp: this.refs.otp.value
 		};
-		this.props.dispatch(loginOtpSagas(data));
+		this.props.dispatch({type: LOGIN_OTP_SAGAS, containerParam: data});
 	}
 }
 
 LoginOtpPage.propTypes = {
-	username: PropTypes.string,
-	password: PropTypes.string,
+	username: PropTypes.string.isRequired,
+	password: PropTypes.string.isRequired,
 	dispatch: PropTypes.func.isRequired
 };
 
-export default connect()(LoginOtpPage);
+export default connect(
+  mapStateToProps
+)(LoginOtpPage);
