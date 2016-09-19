@@ -55,7 +55,7 @@ class LoginOtpPage extends Component {
 			password: this.props.password,
 			otp: this.refs.otp.value
 		};
-		this.props.dispatch({type: LOGIN_OTP_SAGAS, containerParam: data});
+		this.props.dispatch({type: LOGIN_OTP_SAGAS, userOtp: data});
 	}
 }
 

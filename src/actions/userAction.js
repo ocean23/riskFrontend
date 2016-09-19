@@ -4,11 +4,11 @@ import {
     LOCATION_CHANGE
 } from 'react-router-redux';
 
-export function login(sagasParam) {
+export function login(user) {
   return new Promise(function(resolve, reject) {
   	const url = 'http://igateway.wolaidai.com:8888/sso/login';
   	console.log('beginnnnnnnnn');
-  	console.log(sagasParam);
+  	console.log(user);
   	console.log(url);
   	console.log('beginnnnnnnnn');
     fetch(url, {
@@ -17,7 +17,7 @@ export function login(sagasParam) {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
       },
-			body: JSON.stringify(sagasParam)
+			body: JSON.stringify(user)
     }).then(function(req) {
     	console.log('11111111');
     	console.log(req);
@@ -32,7 +32,7 @@ export function login(sagasParam) {
   });
 }
 
-export function loginOtp(sagasParam) {
+export function loginOtp(userOtp) {
   return new Promise(function(resolve, reject) {
   	const url = 'http://igateway.wolaidai.com:8888/sso/second_factor';
     fetch(url, {
@@ -41,7 +41,7 @@ export function loginOtp(sagasParam) {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json'
       },
-			body: JSON.stringify(sagasParam)
+			body: JSON.stringify(userOtp)
     }).then(function(req) {
     	 // result.xUserToken = req.headers.get('X-USER-TOKEN');
       resolve(req);

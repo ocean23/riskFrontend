@@ -6,9 +6,9 @@ import { browserHistory } from 'react-router';
 
 export function* loginSagas(getState) {
 	try {
-		const chartsData = yield call(login, getState.containerParam);
+		const chartsData = yield call(login, getState.user);
 		if (chartsData.status === 200) {
-			yield put({type: AFTER_LOGIN, sagasParam: getState.containerParam});
+			yield put({type: AFTER_LOGIN, user: getState.user});
 		} else {
 			console.log('error: code=' + chartsData.code);
 		}
@@ -19,7 +19,7 @@ export function* loginSagas(getState) {
 
 export function* loginOtpSagas(getState) {
 	try {
-		const chartsData = yield call(loginOtp, getState.containerParam);
+		const chartsData = yield call(loginOtp, getState.userOtp);
 		console.log('############');
 		console.log(chartsData.status);
 		console.log(chartsData.headers.get('X-USER-TOKEN'));

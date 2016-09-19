@@ -52,7 +52,7 @@ class LoginPage extends Component {
 			username: this.refs.mobile.value,
 			password: this.refs.password.value
 		};
-		this.props.dispatch({type: LOGIN_SAGAS, containerParam: data});
+		this.props.dispatch({type: LOGIN_SAGAS, user: data});
 	}
 }
 

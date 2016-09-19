@@ -12,8 +12,8 @@ function configReducer(state = initialState, action = {}) {
   case AFTER_LOGIN:
 		browserHistory.push('/loginotp');
   	return state.set('validAuthenticatioin', true)
-  						.set('username', fromJS(action.sagasParam.username))
-  						.set('password', fromJS(action.sagasParam.password));
+  						.set('username', fromJS(action.user.username))
+  						.set('password', fromJS(action.user.password));
   case AFTER_LOGIN_OTP:
 		browserHistory.push('/main');
   	return state.set('xUserToken', fromJS(action.xUserToken));
