@@ -1,8 +1,5 @@
 import 'whatwg-fetch';
 import { LOGIN_SAGAS, LOGIN_OTP_SAGAS, AFTER_LOGIN, AFTER_LOGIN_OTP } from '../constants/UserConstants';
-import {
-    LOCATION_CHANGE
-} from 'react-router-redux';
 
 export function login(user) {
   return new Promise(function(resolve, reject) {
@@ -19,14 +16,8 @@ export function login(user) {
       },
 			body: JSON.stringify(user)
     }).then(function(req) {
-    	console.log('11111111');
-    	console.log(req);
-    	console.log('111111111');
       resolve(req.json());
     }).catch(function(err) {
-    	console.log('22222');
-    	console.log(err);
-    	console.log('22222');
       reject(err.message);
     });
   });
@@ -43,7 +34,6 @@ export function loginOtp(userOtp) {
       },
 			body: JSON.stringify(userOtp)
     }).then(function(req) {
-    	 // result.xUserToken = req.headers.get('X-USER-TOKEN');
       resolve(req);
     }).catch(function(err) {
       reject(err.message);

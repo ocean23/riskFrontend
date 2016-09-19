@@ -20,10 +20,6 @@ export function* loginSagas(getState) {
 export function* loginOtpSagas(getState) {
 	try {
 		const chartsData = yield call(loginOtp, getState.userOtp);
-		console.log('############');
-		console.log(chartsData.status);
-		console.log(chartsData.headers.get('X-USER-TOKEN'));
-		console.log('############');
 		if (chartsData.status === 200) {
 			yield put({type: AFTER_LOGIN_OTP, xUserToken: chartsData.headers.get('X-USER-TOKEN')});
 		} else {
