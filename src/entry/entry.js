@@ -10,11 +10,7 @@ import Immutable from 'immutable';
 import { fromJS } from 'immutable';
 import DevTools from '../containers/DevTools';
 import configureStore from '../store/configureStore';
-import App from '../containers/navigation/App';
-import LoginPage from '../containers/navigation/LoginPage';
-import LoginOtpPage from '../containers/navigation/LoginOtpPage';
-import MainPage from '../containers/navigation/MainPage';
-import SearchPage from '../containers/navigation/SearchPage';
+import LoginPage from '../containers/LoginPage';
 
 const initialState = fromJS({
   user: {
@@ -40,13 +36,7 @@ ReactDOM.render(
 	<Provider store={ store }>
 		<div>
 			<Router history={ browserHistory }>
-				<Route path="/" component={App}>
-					<IndexRoute component={LoginPage}/>
-		      <Route path="/login" component={LoginPage}/>
-		      <Route path="/loginotp" component={LoginOtpPage}/>
-		      <Route path="/search" component={SearchPage}/>
-		      <Route path="/main" component={MainPage}/>
-	      </Route>
+				<Route path="/" component={LoginPage} />
 			</Router>
 			{ injectDevTools() }
 		</div>

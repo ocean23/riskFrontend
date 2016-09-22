@@ -15,7 +15,7 @@ module.exports = {
 	devtool: process.env.NODE_ENV !== 'production' ? 'eval-source-map' : '',
 	entry: {
 		build: getEntrySources([
-			'./src/entry/navigation.js'
+			'./src/entry/entry.js'
 		])
 	},
 	output: {
