@@ -21,6 +21,7 @@
   "license": "MIT",
   "homepage": "https://github.com/andrewdamelio/react-redux-boilerplate#readme",
   "dependencies": {
+    "@sketchpixy/rubix": "^2.9.8",
     "bootstrap": "^3.3.7",
     "classnames": "^2.2.5",
     "history": "^4.0.1",

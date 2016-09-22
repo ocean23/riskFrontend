@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { Link, browserHistory } from 'react-router';
 import classNames from 'classnames';
 import { push } from 'react-router-redux';
+import { Button } from '@sketchpixy/rubix';
 import { loginOtp } from '../../actions/userAction';
 import { LOGIN_SAGAS } from '../../constants/UserConstants';
 
@@ -46,6 +47,11 @@ class SearchPage extends Component {
                               <input className="form-control" placeholder="xusertoken" name="xusertoken" ref="xusertoken" value={this.state.xusertoken}/>
                           </div>
 		                    </div>
+												<div>
+												  <div><Button bsStyle="green">Green Button!</Button></div>
+												  <div><Button bsStyle="red">Red Button!</Button></div>
+												  <div><Button bsStyle="blue" outlined>Blue Button!</Button></div>
+												</div>
 		                </div>
 		            </div>
 		        </div>
