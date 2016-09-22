@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import '../styles/iceworld.scss';
+import '../styles/common.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';

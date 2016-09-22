@@ -36,6 +36,9 @@ class LoginPage extends Component {
 		                                    <input className="form-control" placeholder="Password" name="password" ref="password" type="password" />
 		                                </div>
 		                                <button type="submit" onClick={this.handleLogin} className="btn btn-lg btn-success btn-block">Login</button>
+		                                <div className="test-sass">
+		                                	Test Sass
+		                                </div>
 		                            </div>
 		                        </div>
 		                    </div>
