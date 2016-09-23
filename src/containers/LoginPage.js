@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import ReactDOM from 'react-dom';
 import {
   Row,
   Col,
@@ -20,11 +21,18 @@ import {
 } from '@sketchpixy/rubix';
 import { LOGIN_SAGAS } from '../constants/UserConstants';
 
+function mapStateToProps(state) {
+  return {
+    validAuthenticatioin: state.getIn(['user', 'validAuthenticatioin']),
+  };
+}
+
 class LoginPage extends Component {
 
 	constructor(props) {
 		super(props);
-		this.handleLogin = this.handleLogin.bind(this);
+		this.state = { username: '', password: '', xusertoken: '' };
+		this.login = this.login.bind(this);
 	}
 
 	componentDidMount() {
@@ -51,13 +59,13 @@ class LoginPage extends Component {
                         </div>
                         <div>
                           <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
-                            <Form>
-                              <FormGroup controlId="emailaddress">
+                            <Form onSubmit={this.login}>
+                              <FormGroup controlId="mobile">
                                 <InputGroup bsSize="large">
                                   <InputGroup.Addon>
                                     <Icon glyph="icon-fontello-mail" />
                                   </InputGroup.Addon>
-                                  <FormControl autoFocus type="email" className="border-focus-blue" placeholder="support@sketchpixy.com" />
+                                  <FormControl type="text" autoFocus className="border-focus-blue" placeholder="mobile" ref={input => {this.mobile = input;}} />
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup controlId="password">
@@ -65,7 +73,7 @@ class LoginPage extends Component {
                                   <InputGroup.Addon>
                                     <Icon glyph="icon-fontello-key" />
                                   </InputGroup.Addon>
-                                  <FormControl type="password" className="border-focus-blue" placeholder="password" />
+                                  <FormControl type="password" className="border-focus-blue" placeholder="password" ref="password" />
                                 </InputGroup>
                               </FormGroup>
                               <FormGroup>
@@ -92,17 +100,25 @@ class LoginPage extends Component {
 			);
 	}
 
-	handleLogin() {
-		const data = {
-			username: this.refs.mobile.value,
-			password: this.refs.password.value
-		};
-		this.props.dispatch({type: LOGIN_SAGAS, user: data});
+	login(e) {
+		// const data = {
+		// 	username: this.refs.mobile.getInputDOMNode.value
+		// };
+		e.preventDefault();
+		console.log('-------');
+		console.log(ReactDOM.findDOMNode(this.mobile).value);
+		console.log(this);
+		console.log('-------');
+
+		// this.props.dispatch({type: LOGIN_SAGAS, user: data});
 	}
 }
 
 LoginPage.propTypes = {
+	validAuthenticatioin: PropTypes.bool.isRequired,
 	dispatch: PropTypes.func.isRequired
 };
 
-export default connect()(LoginPage);
+export default connect(
+	mapStateToProps
+)(LoginPage);
