@@ -1,6 +1,6 @@
 import 'babel-polyfill';
 
-import '../styles/common.scss';
+import '../sass/main.scss';
 
 import React from 'react';
 import ReactDOM from 'react-dom';
