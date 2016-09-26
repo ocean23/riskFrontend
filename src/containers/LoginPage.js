@@ -10,8 +10,10 @@ import {
   Badge,
   Panel,
   Button,
+  Alert,
   PanelBody,
   FormGroup,
+  ControlLabel,
   LoremIpsum,
   InputGroup,
   FormControl,
@@ -19,20 +21,14 @@ import {
   ButtonToolbar,
   PanelContainer,
 } from '@sketchpixy/rubix';
-import { LOGIN_SAGAS } from '../constants/UserConstants';
-
-function mapStateToProps(state) {
-  return {
-    validAuthenticatioin: state.getIn(['user', 'validAuthenticatioin']),
-  };
-}
+import { SUCCESS_LOGIN } from '../constants/UserConstants';
+import { login, loginOtp } from '../actions/userAction';
 
 class LoginPage extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { username: '', password: '', xusertoken: '' };
-		this.login = this.login.bind(this);
+		this.state = { validAuthenticatioin: false, error: null, otp: '', username: '', password: '' };
 	}
 
 	componentDidMount() {
@@ -44,11 +40,22 @@ class LoginPage extends Component {
   }
 
 	render() {
+		const errors = this.state.error ?
+			(
+				<Alert danger dismissible>
+				  {this.state.error.map(({ message }, i) => {
+					return <div key={i}>{message}</div>;
+				  })}
+				</Alert>
+			) : null;
 		return (
 			<div id="auth-container" className="login">
 				<div id="auth-row">
 					<div id="auth-cell">
             <Grid>
+
+            	{errors}
+
               <Row>
                 <Col sm={4} smOffset={4} xs={10} xsOffset={1} collapseLeft collapseRight>
                   <PanelContainer controls={false}>
@@ -59,33 +66,51 @@ class LoginPage extends Component {
                         </div>
                         <div>
                           <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
-                            <Form onSubmit={this.login}>
-                              <FormGroup controlId="mobile">
-                                <InputGroup bsSize="large">
-                                  <InputGroup.Addon>
-                                    <Icon glyph="icon-fontello-mail" />
-                                  </InputGroup.Addon>
-                                  <FormControl type="text" autoFocus className="border-focus-blue" placeholder="mobile" ref={input => {this.mobile = input;}} />
-                                </InputGroup>
-                              </FormGroup>
-                              <FormGroup controlId="password">
-                                <InputGroup bsSize="large">
-                                  <InputGroup.Addon>
-                                    <Icon glyph="icon-fontello-key" />
-                                  </InputGroup.Addon>
-                                  <FormControl type="password" className="border-focus-blue" placeholder="password" ref="password" />
-                                </InputGroup>
-                              </FormGroup>
-                              <FormGroup>
-                                <Grid>
-                                  <Row>
-                                    <Col xs={6} collapseLeft collapseRight className="text-right">
-                                      <Button outlined lg type="submit" bsStyle="blue">Login</Button>
-                                    </Col>
-                                  </Row>
-                                </Grid>
-                              </FormGroup>
-                            </Form>
+                          	{ this.state.validAuthenticatioin ?
+			                            <Form onSubmit={::this.loginOtp}>
+			                              <FormGroup controlId="otp">
+			                              	<ControlLabel>手机验证码</ControlLabel>
+			                              	<FormControl type="text" autoFocus className="border-focus-blue" placeholder="手机验证码" ref={input => {this.otp = input;}} />
+			                              </FormGroup>
+			                              <FormGroup>
+			                                <Grid>
+			                                  <Row>
+			                                    <Col xs={6} collapseLeft collapseRight className="text-right">
+			                                      <Button outlined lg type="submit" bsStyle="blue">提交</Button>
+			                                    </Col>
+			                                  </Row>
+			                                </Grid>
+			                              </FormGroup>
+			                            </Form>
+		                            :
+		                            <Form onSubmit={::this.submitLogin}>
+		                              <FormGroup controlId="mobile">
+		                                <InputGroup bsSize="large">
+		                                  <InputGroup.Addon>
+		                                    <Icon glyph="icon-fontello-mail" />
+		                                  </InputGroup.Addon>
+		                                  <FormControl type="text" autoFocus className="border-focus-blue" placeholder="mobile" ref={input => {this.mobile = input;}} />
+		                                </InputGroup>
+		                              </FormGroup>
+		                              <FormGroup controlId="password">
+		                                <InputGroup bsSize="large">
+		                                  <InputGroup.Addon>
+		                                    <Icon glyph="icon-fontello-key" />
+		                                  </InputGroup.Addon>
+		                                  <FormControl type="password" className="border-focus-blue" placeholder="password" ref={input => {this.password = input;}} />
+		                                </InputGroup>
+		                              </FormGroup>
+		                              <FormGroup>
+		                                <Grid>
+		                                  <Row>
+		                                    <Col xs={6} collapseLeft collapseRight className="text-right">
+		                                      <Button outlined lg type="submit" bsStyle="blue">提交</Button>
+		                                    </Col>
+		                                  </Row>
+		                                </Grid>
+		                              </FormGroup>
+		                            </Form>
+                          	}
                           </div>
                         </div>
                       </PanelBody>
@@ -100,25 +125,61 @@ class LoginPage extends Component {
 			);
 	}
 
-	login(e) {
-		// const data = {
-		// 	username: this.refs.mobile.getInputDOMNode.value
-		// };
+	submitLogin(e) {
 		e.preventDefault();
-		console.log('-------');
-		console.log(ReactDOM.findDOMNode(this.mobile).value);
-		console.log(this);
-		console.log('-------');
+		const data = {
+			username: ReactDOM.findDOMNode(this.mobile).value,
+			password: ReactDOM.findDOMNode(this.password).value,
+		};
+		const responsePromise = login(data);
+		responsePromise.then(
+			resObj => this.loginHandler(resObj), resStr => this.loginException(resStr)
+			);
+	}
 
-		// this.props.dispatch({type: LOGIN_SAGAS, user: data});
+	loginOtp(e) {
+		e.preventDefault();
+		const data = {
+			username: this.state.username,
+			password: this.state.password,
+			otp: ReactDOM.findDOMNode(this.otp).value,
+		};
+		const responsePromise = loginOtp(data);
+		responsePromise.then(
+			resObj => this.loginOtpHandler(resObj), resStr => this.loginException(resStr)
+			);
+	}
+
+	loginHandler(resObj) {
+		if (resObj.status === 200) {
+			const username = ReactDOM.findDOMNode(this.mobile).value;
+			const password = ReactDOM.findDOMNode(this.password).value;
+			this.setState({ validAuthenticatioin: true, username, password });
+		} else {
+			this.setState({ error: [resObj] });
+		}
+	}
+
+	loginException(resStr) {
+		this.setState({ error: [{resStr}] });
+	}
+
+	loginOtpHandler(resObj) {
+		if (resObj.status === 200) {
+			const xUserToken = resObj.headers.get('X-USER-TOKEN');
+			const user = {
+				username: this.state.username,
+				xUserToken
+			};
+			this.props.dispatch({type: SUCCESS_LOGIN, user});
+		} else {
+			this.setState({ error: [resObj] });
+		}
 	}
 }
 
 LoginPage.propTypes = {
-	validAuthenticatioin: PropTypes.bool.isRequired,
 	dispatch: PropTypes.func.isRequired
 };
 
-export default connect(
-	mapStateToProps
-)(LoginPage);
+export default connect()(LoginPage);

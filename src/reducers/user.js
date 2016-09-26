@@ -1,6 +1,6 @@
 import { fromJS } from 'immutable';
 import { browserHistory } from 'react-router';
-import { AFTER_LOGIN, AFTER_LOGIN_OTP } from '../constants/UserConstants';
+import { SUCCESS_LOGIN } from '../constants/UserConstants';
 
 /* Reducer */
 
@@ -9,14 +9,10 @@ const initialState = fromJS({
 
 function configReducer(state = initialState, action = {}) {
   switch (action.type) {
-  case AFTER_LOGIN:
-		browserHistory.push('/loginotp');
-  	return state.set('validAuthenticatioin', true)
-  						.set('username', fromJS(action.user.username))
-  						.set('password', fromJS(action.user.password));
-  case AFTER_LOGIN_OTP:
+  case SUCCESS_LOGIN:
 		browserHistory.push('/main');
-  	return state.set('xUserToken', fromJS(action.xUserToken));
+  	return state.set('xUserToken', fromJS(action.user.xUserToken))
+  					.set('username', fromJS(action.user.username));
   default:
     return state;
   }

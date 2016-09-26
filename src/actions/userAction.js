@@ -22,7 +22,7 @@ export function login(user) {
     	console.log('enter success!');
       resolve(req.json());
     }).catch(function(err) {
-    	console.log('enter failure');
+    	console.log('enter error');
       reject(err.message);
     });
   });

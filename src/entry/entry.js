@@ -8,16 +8,16 @@ import { Provider } from 'react-redux';
 import { Router, Route, IndexRoute, browserHistory } from 'react-router';
 import Immutable from 'immutable';
 import { fromJS } from 'immutable';
+
 import DevTools from '../containers/DevTools';
 import configureStore from '../store/configureStore';
+import App from '../containers/App';
 import LoginPage from '../containers/LoginPage';
+import MainPage from '../containers/navigation/MainPage';
 
 const initialState = fromJS({
   user: {
-  	validAuthenticatioin: false,
-    userId: '',
     username: '',
-    password: '',
     xUserToken: ''
   }
 });
@@ -32,11 +32,35 @@ const injectDevTools = () => {
   return null;
 };
 
+const basicRoutes = (
+  <Route>
+    <Route path="login" component={LoginPage} />
+  </Route>
+);
+
+const routes = (
+	<Route path="/" component={App}>
+		<IndexRoute component={MainPage}/>
+		<Route path="main" component={MainPage} />
+	</Route>
+);
+
+const combinedRoutes = (
+  <Route>
+    <Route>
+      {routes}
+    </Route>
+    <Route>
+      {basicRoutes}
+    </Route>
+  </Route>
+);
+
 ReactDOM.render(
 	<Provider store={ store }>
 		<div>
 			<Router history={ browserHistory }>
-				<Route path="/" component={LoginPage} />
+				{combinedRoutes}
 			</Router>
 			{ injectDevTools() }
 		</div>
