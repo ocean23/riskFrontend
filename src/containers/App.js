@@ -6,11 +6,16 @@ import { Grid, Row, Col, MainContainer } from '@sketchpixy/rubix';
 import SidebarComponent from '../components/common/SidebarComponent';
 import Header from '../components/common/Header';
 import Footer from '../components/common/Footer';
+import { loadPermissions } from '../actions/userAction';
 
 class App extends Component {
   constructor(props) {
     super(props);
   }
+
+	componentDidMount() {
+		loadPermissions();
+	}
 
   render() {
     return (

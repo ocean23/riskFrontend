@@ -68,22 +68,16 @@ class SearchPage extends Component {
 		};
 		// this.props.dispatch({type: LOGIN_SAGAS, user: data});
 		const chartsData = loginOtp(data);
-		console.log('--------');
-		console.log('finish execute');
-		console.log('--------');
 		const self = this;
 		chartsData.then(
 			arg => this.test(arg), function(reason) {
-				console.log('!!!!!!!!!');
-				console.log(reason);
-				console.log('!!!!!!!!!');
 			}
 		);
 	}
 	// args => this.test(args)
 	test(userToken) {
-		console.log('$$$$$$$$$$$$$$$$$$$$$');
-		console.log(userToken);
+		// console.log('$$$$$$$$$$$$$$$$$$$$$');
+		// console.log(userToken);
 		// console.log(args);
 		// console.log(args.headers.get('X-USER-TOKEN'));
 		// console.log('$$$$$$$$$$$$$$$');

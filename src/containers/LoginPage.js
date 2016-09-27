@@ -173,6 +173,7 @@ class LoginPage extends Component {
 				xUserToken
 			};
 			this.props.dispatch({type: SUCCESS_LOGIN, user});
+			localStorage.setItem('xUserToken', xUserToken);
 			browserHistory.push('/riskestimate');
 		} else {
 			this.setState({ error: [resObj] });
