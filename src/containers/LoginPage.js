@@ -1,5 +1,6 @@
 import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import { browserHistory } from 'react-router';
 import ReactDOM from 'react-dom';
 import {
   Row,
@@ -172,6 +173,7 @@ class LoginPage extends Component {
 				xUserToken
 			};
 			this.props.dispatch({type: SUCCESS_LOGIN, user});
+			browserHistory.push('/riskestimate');
 		} else {
 			this.setState({ error: [resObj] });
 		}

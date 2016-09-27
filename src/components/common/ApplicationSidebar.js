@@ -23,7 +23,7 @@ class ApplicationSidebar extends Component {
 
                   <div className="sidebar-header">PAGES</div>
 
-								  <SidebarNavItem glyph="icon-outlined-todolist" name="All Todos" href="/"></SidebarNavItem>
+								  <SidebarNavItem glyph="icon-outlined-todolist" name="All Todos" href="/main"></SidebarNavItem>
 								  <SidebarNavItem glyph="icon-outlined-pencil" name="Edit Todo" href="/todo/edit/:id"></SidebarNavItem>
                 </SidebarNav>
               </div>

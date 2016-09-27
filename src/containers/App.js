@@ -13,10 +13,6 @@ class App extends Component {
   }
 
   render() {
-  	console.log('#####');
-  	console.log(this.props.location.pathname);
-  	console.log(this.props.router.location);
-  	console.log('@@###');
     return (
       <MainContainer {...this.props}>
         <SidebarComponent />

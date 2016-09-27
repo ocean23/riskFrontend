@@ -13,7 +13,7 @@ import DevTools from '../containers/DevTools';
 import configureStore from '../store/configureStore';
 import App from '../containers/App';
 import LoginPage from '../containers/LoginPage';
-import MainPage from '../containers/navigation/MainPage';
+import RiskEstimate from '../containers/RiskEstimate';
 
 const initialState = fromJS({
   user: {
@@ -40,8 +40,8 @@ const basicRoutes = (
 
 const routes = (
 	<Route path="/" component={App}>
-		<IndexRoute component={MainPage}/>
-		<Route path="main" component={MainPage} />
+		<IndexRoute component={RiskEstimate}/>
+		<Route path="riskestimate" component={RiskEstimate} />
 	</Route>
 );
 
