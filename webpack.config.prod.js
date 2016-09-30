@@ -57,10 +57,7 @@ module.exports = {
 				loader: ExtractTextPlugin.extract('css!sass')
 		}, {
 			test: /\.css$/,
-			loader: ExtractTextPlugin.extract(
-				'style-loader',
-				'css-loader'
-				)
+			loader: ExtractTextPlugin.extract('style','css')
 		}, {
 			test: /\.(png|jpg|jpeg|gif|svg)$/,
 			loader: 'url-loader?prefix=img/&limit=53248'

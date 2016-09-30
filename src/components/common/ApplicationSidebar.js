@@ -29,6 +29,7 @@ class ApplicationSidebar extends Component {
   	if (existMenuIndex !== -1) {
   		existMenu = true;
   	}
+  	const hideMenu = !existMenu;
   	console.log('######');
   	console.log(existMenu);
   	console.log('######');
@@ -43,6 +44,7 @@ class ApplicationSidebar extends Component {
                 <SidebarNav style={{marginBottom: 0}} ref={(c) => {this._nav = c;}}>
 
                   <div className="sidebar-header">PAGES</div>
+									<SidebarNavItem hidden={hideMenu} glyph="icon-outlined-pencil" name="Edit Todo" href="/todo/edit/:id"></SidebarNavItem>
                 </SidebarNav>
 								{ existMenu &&
 										<a href={redirectUrl}>
