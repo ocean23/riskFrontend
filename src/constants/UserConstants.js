@@ -3,3 +3,6 @@ export const AFTER_LOGIN = 'AFTER_LOGIN';
 export const LOGIN_OTP_SAGAS = 'LOGIN_OTP_SAGAS';
 export const AFTER_LOGIN_OTP = 'AFTER_LOGIN_OTP';
 export const SUCCESS_LOGIN = 'SUCCESS_LOGIN';
+export const LOGOUT = 'LOGOUT';
+export const INIT_PERMISSIONS = 'INIT_PERMISSIONS';
+export const PERMISSIONS = 'PERMISSIONS';

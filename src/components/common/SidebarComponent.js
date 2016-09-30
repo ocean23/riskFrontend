@@ -57,18 +57,6 @@ class SidebarComponent extends Component {
           <Sidebar sidebar={0}>
             <ApplicationSidebar />
           </Sidebar>
-          <Sidebar sidebar={1}>
-            <DummySidebar />
-          </Sidebar>
-          <Sidebar sidebar={2}>
-            <DummySidebar />
-          </Sidebar>
-          <Sidebar sidebar={3}>
-            <DummySidebar />
-          </Sidebar>
-          <Sidebar sidebar={4}>
-            <DummySidebar />
-          </Sidebar>
         </div>
       </div>
     );

@@ -1,17 +1,38 @@
-import React, { Component } from 'react';
+import React, { Component, PropTypes } from 'react';
 import { connect } from 'react-redux';
+import ImmutablePropTypes from 'react-immutable-proptypes';
 
 import {
-  Sidebar, SidebarNav, SidebarNavItem,
+  SidebarNav, SidebarNavItem,
   SidebarControls, SidebarControlBtn,
   LoremIpsum, Grid, Row, Col, FormControl,
   Label, Progress, Icon,
   SidebarDivider
 } from '@sketchpixy/rubix';
 
+function mapStateToProps(state) {
+  return {
+    permissions: state.getIn(['user', 'permissions']),
+    xUserToken: state.getIn(['user', 'xUserToken'])
+  };
+}
+
 class ApplicationSidebar extends Component {
 
   render() {
+  	console.log('-----');
+  	console.log(this.props.permissions);
+  	console.log('---');
+  	const permArray = this.props.permissions.toArray();
+  	const existMenuIndex = permArray.indexOf('btn_allow_rule_access');
+  	let existMenu = false;
+  	if (existMenuIndex !== -1) {
+  		existMenu = true;
+  	}
+  	console.log('######');
+  	console.log(existMenu);
+  	console.log('######');
+  	const redirectUrl = 'http://192.168.130.11:8080/#/app/search/' + this.props.xUserToken;
     return (
       <div>
         <Grid>
@@ -22,10 +43,12 @@ class ApplicationSidebar extends Component {
                 <SidebarNav style={{marginBottom: 0}} ref={(c) => {this._nav = c;}}>
 
                   <div className="sidebar-header">PAGES</div>
-
-								  <SidebarNavItem glyph="icon-outlined-todolist" name="All Todos" href="/main"></SidebarNavItem>
-								  <SidebarNavItem glyph="icon-outlined-pencil" name="Edit Todo" href="/todo/edit/:id"></SidebarNavItem>
                 </SidebarNav>
+								{ existMenu &&
+										<a href={redirectUrl}>
+											规则引擎
+										</a>
+								}
               </div>
             </Col>
           </Row>
@@ -39,4 +62,12 @@ class ApplicationSidebar extends Component {
   }
 }
 
-export default connect()(ApplicationSidebar);
+ApplicationSidebar.propTypes = {
+	permissions: ImmutablePropTypes.list.isRequired,
+	xUserToken: PropTypes.string.isRequired,
+  dispatch: PropTypes.func.isRequired
+};
+
+export default connect(
+	mapStateToProps
+	)(ApplicationSidebar);

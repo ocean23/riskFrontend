@@ -34,9 +34,10 @@ export function doGet(url) {
 				'Content-Type': 'application/json',
 				'X-User-Token': xUserToken
 			}
-		}).then(function(req) {
-			console.log('enter success get');
-			resolve(req);
+		}).then(function(response) {
+			return response.json();
+		}).then(function(json) {
+			resolve(json);
 		}).catch(function(err) {
 			reject(err.message);
 		});
