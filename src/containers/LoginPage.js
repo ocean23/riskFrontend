@@ -24,15 +24,14 @@ import {
   ButtonToolbar,
   PanelContainer,
 } from '@sketchpixy/rubix';
+import { login, loginOtp, loadPermissions } from '../actions/userAction';
 import { SUCCESS_LOGIN } from '../constants/UserConstants';
-import { login, loginOtp } from '../actions/userAction';
-import { BUTTON_STATE } from '../constants/ButtonState';
 
 class LoginPage extends Component {
 
 	constructor(props) {
 		super(props);
-		this.state = { validAuthenticatioin: false, otp: '', username: '', password: '', submitState: STATE.NOTHING };
+		this.state = { validAuthenticatioin: false, username: '', password: '', submitState: STATE.NOTHING };
 	}
 
 	componentDidMount() {
@@ -60,7 +59,7 @@ class LoginPage extends Component {
                         <div>
                           <div style={{padding: 25, paddingTop: 0, paddingBottom: 0, margin: 'auto', marginBottom: 25, marginTop: 25}}>
                           	{ this.state.validAuthenticatioin ?
-			                            <Form onSubmit={::this.loginOtp}>
+			                            <Form onSubmit={::this.loginOtp} role="form" data-toggle="validator">
 			                              <FormGroup controlId="otp">
 			                              	<ControlLabel>手机验证码</ControlLabel>
 			                              	<FormControl type="text" autoFocus className="border-focus-blue" placeholder="手机验证码" ref={input => {this.otp = input;}} />
@@ -69,15 +68,15 @@ class LoginPage extends Component {
 			                                <Grid>
 			                                  <Row>
 			                                    <Col mdOffset={4} md={5}>
-			                                      <Button outlined lg type="submit" bsStyle="blue">提交</Button>
+			                                      <Button outlined lg type="submit" bsStyle="blue">Submit</Button>
 			                                    </Col>
 			                                  </Row>
 			                                </Grid>
 			                              </FormGroup>
 			                            </Form>
 		                            :
-		                            <Form onSubmit={::this.submitLogin} id="signInForm" role="form" data-toggle="validator">
-		                              <FormGroup controlId="mobile" validationState="error">
+		                            <Form onSubmit={::this.submitLogin} role="form" data-toggle="validator">
+		                              <FormGroup controlId="mobile">
 		                                <InputGroup bsSize="large">
 		                                  <InputGroup.Addon>
 		                                    <Icon glyph="icon-fontello-mail" />
@@ -137,6 +136,7 @@ class LoginPage extends Component {
 
 	loginOtp(e) {
 		e.preventDefault();
+		this.setState({ submitState: STATE.LOADING });
 		const data = {
 			username: this.state.username,
 			password: this.state.password,
@@ -152,7 +152,7 @@ class LoginPage extends Component {
 		if (resObj.status === 200) {
 			const username = ReactDOM.findDOMNode(this.mobile).value;
 			const password = ReactDOM.findDOMNode(this.password).value;
-			this.setState({ validAuthenticatioin: true, username, password });
+			this.setState({ validAuthenticatioin: true, username, password, submitState: STATE.NOTHING });
 		} else {
 			this.setState({ submitState: STATE.ERROR });
 			Alert.error(resObj.message);
@@ -164,19 +164,50 @@ class LoginPage extends Component {
 		Alert.error(resStr);
 	}
 
-	loginOtpHandler(resObj) {
-		if (resObj.status === 200) {
-			const xUserToken = resObj.headers.get('X-USER-TOKEN');
+	loginOtpHandler(response) {
+		if (response.status === 200) {
+			const xUserToken = response.headers.get('X-USER-TOKEN');
 			const user = {
 				username: this.state.username,
 				xUserToken
 			};
+			this.initPermissions(xUserToken);
+		} else {
+			this.setState({ submitState: STATE.ERROR });
+			Alert.error(response.json().message);
+		}
+	}
+
+	initPermissions(xUserToken) {
+		const responsePromise = loadPermissions(xUserToken);
+		if (responsePromise !== false) {
+			responsePromise.then(
+				resObj => this.initPermissionsHandler(resObj, xUserToken), resStr => this.initPermissionsException(resStr)
+				);
+		}
+	}
+
+	initPermissionsHandler(resObj, xUserToken) {
+		if (resObj.status === 200) {
+			const permissions = [];
+			for (const item of resObj.data) {
+				permissions.push(item.permission);
+			}
+			const user = {
+				username: this.state.username,
+				permissions,
+				xUserToken
+			};
+			sessionStorage.setItem('userSession', JSON.stringify(user));
 			this.props.dispatch({type: SUCCESS_LOGIN, user});
-			localStorage.setItem('xUserToken', xUserToken);
 			browserHistory.push('/riskestimate');
 		} else {
-			this.setState({ error: [resObj] });
+			Alert.error(resObj.json().message);
 		}
+	}
+
+	initPermissionsException(resStr) {
+		Alert.error(resStr);
 	}
 }
 

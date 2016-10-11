@@ -20,7 +20,6 @@ import RiskEstimate from '../containers/RiskEstimate';
 const initialState = fromJS({
 	user: {
 		username: '',
-		xUserToken: '',
 		permissions: [],
 	}
 });

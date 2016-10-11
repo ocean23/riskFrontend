@@ -12,28 +12,28 @@ import {
 
 function mapStateToProps(state) {
   return {
-    permissions: state.getIn(['user', 'permissions']),
-    xUserToken: state.getIn(['user', 'xUserToken'])
+    permissions: state.getIn(['user', 'permissions'])
   };
 }
 
 class ApplicationSidebar extends Component {
 
   render() {
-  	console.log('-----');
-  	console.log(this.props.permissions);
-  	console.log('---');
-  	const permArray = this.props.permissions.toArray();
-  	const existMenuIndex = permArray.indexOf('btn_allow_rule_access');
   	let existMenu = false;
-  	if (existMenuIndex !== -1) {
-  		existMenu = true;
+  	if (this.props.permissions !== undefined) {
+	  	const permArray = this.props.permissions.toArray();
+	  	const existMenuIndex = permArray.indexOf('btn_allow_rule_access');
+	  	if (existMenuIndex !== -1) {
+	  		existMenu = true;
+	  	}
   	}
   	const hideMenu = !existMenu;
-  	console.log('######');
-  	console.log(existMenu);
-  	console.log('######');
-  	const redirectUrl = 'http://192.168.130.11:8080/#/app/search/' + this.props.xUserToken;
+  	let redirectUrl = '';
+		const userSessionStr = sessionStorage.getItem('userSession');
+		if (userSessionStr !== null && userSessionStr !== undefined) {
+			const user = JSON.parse(userSessionStr);
+			redirectUrl = 'http://192.168.130.11:8080/#/app/search/' + user.xUserToken;
+		}
     return (
       <div>
         <Grid>
@@ -65,8 +65,7 @@ class ApplicationSidebar extends Component {
 }
 
 ApplicationSidebar.propTypes = {
-	permissions: ImmutablePropTypes.list.isRequired,
-	xUserToken: PropTypes.string.isRequired,
+	permissions: ImmutablePropTypes.list,
   dispatch: PropTypes.func.isRequired
 };
 

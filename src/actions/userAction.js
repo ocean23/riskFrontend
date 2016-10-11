@@ -5,7 +5,7 @@ import { browserHistory } from 'react-router';
 
 export function login(user) {
 	return new Promise(function(resolve, reject) {
-		const url = 'http://192.168.110.4:6699/sso/login';
+		const url = 'http://192.168.130.11:6699/sso/login';
 		fetch(url, {
 			method: 'POST',
 			headers: {
@@ -24,11 +24,31 @@ export function login(user) {
 }
 
 export function logout() {
-	const xUserToken = localStorage.getItem('xUserToken');
+	const xUserToken = sessionStorage.getItem('xUserToken');
 	return new Promise(function(resolve, reject) {
-		const url = 'http://192.168.110.4:6699/sso/logout';
+		const url = 'http://192.168.130.11:6699/sso/logout';
 		fetch(url, {
-			method: 'GET',
+			method: 'get',
+			headers: {
+				'Accept': 'application/json',
+				'Content-Type': 'application/json',
+				'X-User-Token': xUserToken
+			}
+		}).then(function(response) {
+			return response.json();
+		}).then(function(json) {
+			resolve(json);
+		}).catch(function(err) {
+			reject(err.message);
+		});
+	});
+}
+
+export function loadPermissions(xUserToken) {
+	return new Promise(function(resolve, reject) {
+		const url = 'http://192.168.130.11:6699/iam/my/role/buttons';
+		fetch(url, {
+			method: 'get',
 			headers: {
 				'Accept': 'application/json',
 				'Content-Type': 'application/json',
@@ -46,7 +66,7 @@ export function logout() {
 
 export function loginOtp(userOtp) {
 	return new Promise(function(resolve, reject) {
-		const url = 'http://192.168.110.4:6699/sso/second_factor';
+		const url = 'http://192.168.130.11:6699/sso/second_factor';
 		fetch(url, {
 			method: 'POST',
 			headers: {
@@ -54,19 +74,11 @@ export function loginOtp(userOtp) {
 				'Content-Type': 'application/json'
 			},
 			body: JSON.stringify(userOtp)
-		}).then(function(req) {
-			resolve(req);
+		}).then(function(response) {
+			resolve(response);
 		}).catch(function(err) {
 			reject(err.message);
 		});
 	});
-}
-
-export function initPermision(intermedia) {
-	console.log('enter initPermision');
-	console.log('-----');
-	console.log(intermedia);
-	console.log('-------');
-	return { type: PERMISSIONS, intermedia };
 }
 

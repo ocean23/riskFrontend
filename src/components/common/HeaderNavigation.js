@@ -24,7 +24,6 @@ class HeaderNavigation extends Component {
   }
 
   submitLogout() {
-  	console.log('@@@@@ enter logout');
 		const responsePromise = logout();
 		responsePromise.then(
 			resObj => this.loginHandler(resObj), resStr => this.loginException(resStr)
@@ -33,6 +32,7 @@ class HeaderNavigation extends Component {
 
 	loginHandler(resObj) {
 		if (resObj.status === 200) {
+			sessionStorage.removeItem('userSession');
 			this.props.dispatch({type: LOGOUT});
 			browserHistory.push('/login');
 		} else {

@@ -15,9 +15,6 @@ class RiskEstimate extends Component {
 
 	render() {
 		const xUserToken = localStorage.getItem('xUserToken');
-		console.log('------');
-		console.log('xUserToken=' + xUserToken);
-		console.log('------');
 		return (
 			<div className="root-container">
 			  <div><Button bsStyle="green">Green Button!</Button></div>
